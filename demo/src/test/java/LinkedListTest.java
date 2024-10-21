@@ -1,20 +1,24 @@
-import static org.junit.Assert.*;
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
 import java.util.NoSuchElementException;
 
-public class LinkedListTest {
-    private list.LinkedList<String> list;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-    @Before
+import com.list.LinkedList;
+
+public class LinkedListTest {
+    private LinkedList<String> list;
+
+    @BeforeEach
     public void setUp() {
-        list = new list.LinkedList<>();
+        list = new LinkedList<>();
     }
 
     @Test
     public void testConstructorAndSize() {
         assertEquals(0, list.size());
-        list.LinkedList<String> listFromCollection = new list.LinkedList<>(list);
+        LinkedList<String> listFromCollection = new LinkedList<>(list);
         assertEquals(0, listFromCollection.size());
     }
 
@@ -37,7 +41,6 @@ public class LinkedListTest {
         assertEquals("B", list.get(1));
         assertEquals("C", list.get(2));
     }
-
 
     @Test
     public void testSet() {
@@ -131,7 +134,7 @@ public class LinkedListTest {
 
     @Test
     public void testAddAll() {
-        list.LinkedList<String> otherList = new list.LinkedList<>();
+        LinkedList<String> otherList = new LinkedList<>();
         otherList.add("A");
         otherList.add("B");
         assertTrue(list.addAll(otherList));
@@ -144,7 +147,7 @@ public class LinkedListTest {
     public void testAddAllAtIndex() {
         list.add("X");
         list.add("Y");
-        list.LinkedList<String> otherList = new list.LinkedList<>();
+        LinkedList<String> otherList = new LinkedList<>();
         otherList.add("A");
         otherList.add("B");
         assertTrue(list.addAll(1, otherList));
@@ -166,7 +169,7 @@ public class LinkedListTest {
 
     @Test
     public void testAddAllEmpty() {
-        list.LinkedList<String> emptyList = new list.LinkedList<>();
+        LinkedList<String> emptyList = new LinkedList<>();
         assertFalse(list.addAll(emptyList));
         assertEquals(0, list.size());
     }
@@ -176,7 +179,7 @@ public class LinkedListTest {
     @Test
     public void testAddAllAtEnd() {
         list.add("X");
-        list.LinkedList<String> otherList = new list.LinkedList<>();
+        LinkedList<String> otherList = new LinkedList<>();
         otherList.add("A");
         otherList.add("B");
         assertTrue(list.addAll(1, otherList));
@@ -211,7 +214,7 @@ public class LinkedListTest {
 
     @Test
     public void testAddAllWithLargeList() {
-        list.LinkedList<String> largeList = new list.LinkedList<>();
+        LinkedList<String> largeList = new LinkedList<>();
         for (int i = 0; i < 1000; i++) {
             largeList.add("Element" + i);
         }
@@ -286,7 +289,7 @@ public class LinkedListTest {
 
     @Test
     public void testAddAllWithEmptyList() {
-        list.LinkedList<String> emptyList = new list.LinkedList<>();
+        LinkedList<String> emptyList = new LinkedList<>();
         assertFalse(list.addAll(emptyList));
         assertEquals(0, list.size());
     }
@@ -295,7 +298,7 @@ public class LinkedListTest {
     public void testAddAllAtIndexWithEmptyList() {
         list.add("A");
         list.add("B");
-        list.LinkedList<String> emptyList = new list.LinkedList<>();
+        LinkedList<String> emptyList = new LinkedList<>();
         assertFalse(list.addAll(1, emptyList));
         assertEquals(2, list.size());
         assertEquals("A", list.get(0));
@@ -315,10 +318,11 @@ public class LinkedListTest {
 
     @Test
     public void testIndexOfWithNullElement() {
+        list.add("B");
         list.add(null);
         list.add("A");
         list.add(null);
-        assertEquals(0, list.indexOf(null));
+        assertEquals(1, list.indexOf(null));
     }
 
     @Test
@@ -326,15 +330,23 @@ public class LinkedListTest {
         list.add(null);
         list.add("A");
         list.add(null);
+        list.add("B");
         assertEquals(2, list.lastIndexOf(null));
     }
 
     @Test
+    public void testLastIndexOfForNonExistentNullElement() {
+        list.add("A");
+        list.add("B");
+        assertEquals(-1, list.lastIndexOf(null));
+    }
+
+    @Test
     public void testConstructorWithCollection() {
-        list.LinkedList<String> list1 = new list.LinkedList<>();
+        LinkedList<String> list1 = new LinkedList<>();
         list1.add("A");
         list1.add("B");
-        list.LinkedList<String> list2 = new list.LinkedList<>(list1);
+        LinkedList<String> list2 = new LinkedList<>(list1);
         assertEquals(2, list2.size());
         assertEquals("A", list2.getFirst());
         assertEquals("B", list2.getLast());
@@ -344,7 +356,7 @@ public class LinkedListTest {
     public void testAddAllWithIndex() {
         list.add("A");
         list.add("B");
-        list.LinkedList<String> otherList = new list.LinkedList<>();
+        LinkedList<String> otherList = new LinkedList<>();
         otherList.add("C");
         otherList.add("D");
         assertTrue(list.addAll(1, otherList));
@@ -359,7 +371,7 @@ public class LinkedListTest {
     public void testAddAllWithIndexAtEnd() {
         list.add("A");
         list.add("B");
-        list.LinkedList<String> otherList = new list.LinkedList<>();
+        LinkedList<String> otherList = new LinkedList<>();
         otherList.add("C");
         otherList.add("D");
         assertTrue(list.addAll(2, otherList));
@@ -378,6 +390,18 @@ public class LinkedListTest {
         assertEquals("Element0", list.get(0));
         assertEquals("Element499", list.get(499));
         assertEquals("Element999", list.get(999));
+    }
+
+    @Test
+    public void testEntryWithNegativeIndex() {
+        LinkedList<String> otherList = new LinkedList<>();
+        otherList.add("A");
+        try {
+            list.remove(-1);
+            fail("Expected IndexOutOfBoundsException");
+        } catch (IndexOutOfBoundsException e) {
+            assertEquals("Index: -1, Size: 0", e.getMessage());
+        }
     }
 
     @Test
@@ -403,6 +427,13 @@ public class LinkedListTest {
         assertEquals("A", list.get(0));
         assertNull(list.get(1));
         assertEquals("B", list.get(2));
+    }
+
+    @Test
+    public void testRemoveForNotExistentNullElement() {
+        list.add("A");
+        list.add("B");
+        assertFalse(list.remove(null));
     }
 
     @Test
@@ -545,7 +576,7 @@ public class LinkedListTest {
             list.getFirst();
             fail("Expected NoSuchElementException");
         } catch (NoSuchElementException e) {
-//            assertEquals("List is empty", e.getMessage());
+            // assertEquals("List is empty", e.getMessage());
             assertNotNull(e);
         }
     }
@@ -556,7 +587,7 @@ public class LinkedListTest {
             list.getLast();
             fail("Expected NoSuchElementException");
         } catch (NoSuchElementException e) {
-//            assertEquals("List is empty", e.getMessage());
+            // assertEquals("List is empty", e.getMessage());
             assertNotNull(e);
         }
     }
@@ -567,7 +598,7 @@ public class LinkedListTest {
             list.removeFirst();
             fail("Expected NoSuchElementException");
         } catch (NoSuchElementException e) {
-//            assertEquals("List is empty", e.getMessage());
+            // assertEquals("List is empty", e.getMessage());
             assertNotNull(e);
         }
     }
@@ -605,7 +636,7 @@ public class LinkedListTest {
 
     @Test
     public void testAddAllAtInvalidIndex() {
-        list.LinkedList<String> otherList = new list.LinkedList<>();
+        LinkedList<String> otherList = new LinkedList<>();
         otherList.add("A");
         try {
             list.addAll(1, otherList);
@@ -615,9 +646,23 @@ public class LinkedListTest {
         }
     }
 
-    @Test(expected = NoSuchElementException.class)
+    @Test
+    public void testAddAllWithNegativeIndex() {
+        LinkedList<String> otherList = new LinkedList<>();
+        otherList.add("A");
+        try {
+            list.addAll(-1, otherList);
+            fail("Expected IndexOutOfBoundsException");
+        } catch (IndexOutOfBoundsException e) {
+            assertEquals("Index: -1, Size: 0", e.getMessage());
+        }
+    }
+
+    @Test()
     public void testPopEmptyList() {
-        list.pop();
+        assertThrows(NoSuchElementException.class, () -> {
+            list.pop(); // This should throw NoSuchElementException
+        });
     }
 
     @Test
@@ -640,7 +685,7 @@ public class LinkedListTest {
     public void testAddAllWithIndexAtBeginning() {
         list.add("X");
         list.add("Y");
-        list.LinkedList<String> otherList = new list.LinkedList<>();
+        LinkedList<String> otherList = new LinkedList<>();
         otherList.add("A");
         otherList.add("B");
         assertTrue(list.addAll(0, otherList));
@@ -666,7 +711,7 @@ public class LinkedListTest {
     @Test
     public void testAddAllWithEmptySourceList() {
         list.add("A");
-        list.LinkedList<String> emptyList = new list.LinkedList<>();
+        LinkedList<String> emptyList = new LinkedList<>();
         assertFalse(list.addAll(emptyList));
         assertEquals(1, list.size());
         assertEquals("A", list.getFirst());
@@ -687,4 +732,63 @@ public class LinkedListTest {
         assertEquals("A", list.remove(0));
         assertEquals(0, list.size());
     }
+
+    @Test
+    public void testRemoveWithNoArguments() {
+        list.add("A");
+        list.add("B");
+        assertEquals("A", list.remove());
+    }
+
+    @Test
+    public void testPollForEmptyList() {
+        assertEquals(null, list.poll());
+    }
+
+    @Test
+    public void testPoll() {
+        list.add("A");
+        list.add("B");
+        assertEquals("A", list.poll());
+    }
+
+    @Test
+    public void testElement() {
+        list.add("A");
+        list.add("B");
+        assertEquals("A", list.element());
+        assertEquals(true, list.contains("A"));
+    }
+
+    @Test
+    public void testPeekForEmptyList() {
+        assertEquals(null, list.peek());
+    }
+
+    @Test
+    public void testPeek() {
+        list.add("A");
+        list.add("B");
+        assertEquals("A", list.peek());
+        assertEquals(true, list.contains("A"));
+    }
+
+    @Test
+    public void testOffer() {
+        list.add("A");
+        list.offer("B");
+        assertEquals("B", list.getLast());
+
+    }
+
+    @Test
+    public void testRemoveLastOccurrenceForNullObject() {
+        list.add("A");
+        list.offer("B");
+        list.add(null);
+        assertEquals(true, list.removeLastOccurrence(null));
+        assertEquals(false, list.contains(null));
+        assertEquals(false, list.removeLastOccurrence(null));
+    }
+
 }

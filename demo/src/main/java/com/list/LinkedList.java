@@ -1,3 +1,5 @@
+package com.list;
+
 /*
  * Copyright 1997-2006 Sun Microsystems, Inc.  All Rights Reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -23,15 +25,14 @@
  * have any questions.
  */
 
-package list;
-
 import java.util.NoSuchElementException;
 
 /**
  * Linked list implementation of the <tt>List</tt> interface. Implements all
  * optional list operations, and permits all elements (including <tt>null</tt>).
  * In addition to implementing the <tt>List</tt> interface, the
- * <tt>list.LinkedList</tt> class provides uniformly named methods to <tt>get</tt>,
+ * <tt>list.LinkedList</tt> class provides uniformly named methods to
+ * <tt>get</tt>,
  * <tt>remove</tt> and <tt>insert</tt> an element at the beginning and end of
  * the list. These operations allow linked lists to be used as a stack,
  * {@linkplain Queue queue}, or {@linkplain Deque double-ended queue}.
@@ -106,16 +107,14 @@ import java.util.NoSuchElementException;
  *            iterators, and cloning.
  */
 
-public class LinkedList<E>
-{
+public class LinkedList<E> {
     private transient Entry<E> header = new Entry<E>(null, null, null);
-    private transient int      size   = 0;
+    private transient int size = 0;
 
     /**
      * Constructs an empty list.
      */
-    public LinkedList()
-    {
+    public LinkedList() {
         header.next = header.previous = header;
     }
 
@@ -124,12 +123,11 @@ public class LinkedList<E>
      * the order they are returned by the collection's iterator.
      *
      * @param c
-     *            the collection whose elements are to be placed into this list
+     *          the collection whose elements are to be placed into this list
      * @throws NullPointerException
-     *             if the specified collection is null
+     *                              if the specified collection is null
      */
-    public LinkedList(list.LinkedList<E> c)
-    {
+    public LinkedList(com.list.LinkedList<E> c) {
         this();
         addAll(c);
     }
@@ -139,10 +137,9 @@ public class LinkedList<E>
      *
      * @return the first element in this list
      * @throws NoSuchElementException
-     *             if this list is empty
+     *                                if this list is empty
      */
-    public E getFirst()
-    {
+    public E getFirst() {
         if (size == 0)
             throw new NoSuchElementException();
 
@@ -154,10 +151,9 @@ public class LinkedList<E>
      *
      * @return the last element in this list
      * @throws NoSuchElementException
-     *             if this list is empty
+     *                                if this list is empty
      */
-    public E getLast()
-    {
+    public E getLast() {
         if (size == 0)
             throw new NoSuchElementException();
 
@@ -169,10 +165,9 @@ public class LinkedList<E>
      *
      * @return the first element from this list
      * @throws NoSuchElementException
-     *             if this list is empty
+     *                                if this list is empty
      */
-    public E removeFirst()
-    {
+    public E removeFirst() {
         return remove(header.next);
     }
 
@@ -181,10 +176,9 @@ public class LinkedList<E>
      *
      * @return the last element from this list
      * @throws NoSuchElementException
-     *             if this list is empty
+     *                                if this list is empty
      */
-    public E removeLast()
-    {
+    public E removeLast() {
         return remove(header.previous);
     }
 
@@ -192,10 +186,9 @@ public class LinkedList<E>
      * Inserts the specified element at the beginning of this list.
      *
      * @param e
-     *            the element to add
+     *          the element to add
      */
-    public void addFirst(E e)
-    {
+    public void addFirst(E e) {
         addBefore(e, header.next);
     }
 
@@ -206,10 +199,9 @@ public class LinkedList<E>
      * This method is equivalent to {@link #add}.
      *
      * @param e
-     *            the element to add
+     *          the element to add
      */
-    public void addLast(E e)
-    {
+    public void addLast(E e) {
         addBefore(e, header);
     }
 
@@ -220,11 +212,10 @@ public class LinkedList<E>
      * <tt>(o==null&nbsp;?&nbsp;e==null&nbsp;:&nbsp;o.equals(e))</tt>.
      *
      * @param o
-     *            element whose presence in this list is to be tested
+     *          element whose presence in this list is to be tested
      * @return <tt>true</tt> if this list contains the specified element
      */
-    public boolean contains(Object o)
-    {
+    public boolean contains(Object o) {
         return indexOf(o) != -1;
     }
 
@@ -233,8 +224,7 @@ public class LinkedList<E>
      *
      * @return the number of elements in this list
      */
-    public int size()
-    {
+    public int size() {
         return size;
     }
 
@@ -245,11 +235,10 @@ public class LinkedList<E>
      * This method is equivalent to {@link #addLast}.
      *
      * @param e
-     *            element to be appended to this list
+     *          element to be appended to this list
      * @return <tt>true</tt> (as specified by {@link Collection#add})
      */
-    public boolean add(E e)
-    {
+    public boolean add(E e) {
         addBefore(e, header);
         return true;
     }
@@ -265,28 +254,20 @@ public class LinkedList<E>
      * of the call).
      *
      * @param o
-     *            element to be removed from this list, if present
+     *          element to be removed from this list, if present
      * @return <tt>true</tt> if this list contained the specified element
      */
-    public boolean remove(Object o)
-    {
-        if (o == null)
-        {
-            for (Entry<E> e = header.next; e != header; e = e.next)
-            {
-                if (e.element == null)
-                {
+    public boolean remove(Object o) {
+        if (o == null) {
+            for (Entry<E> e = header.next; e != header; e = e.next) {
+                if (e.element == null) {
                     remove(e);
                     return true;
                 }
             }
-        }
-        else
-        {
-            for (Entry<E> e = header.next; e != header; e = e.next)
-            {
-                if (o.equals(e.element))
-                {
+        } else {
+            for (Entry<E> e = header.next; e != header; e = e.next) {
+                if (o.equals(e.element)) {
                     remove(e);
                     return true;
                 }
@@ -304,13 +285,12 @@ public class LinkedList<E>
      * it's nonempty.)
      *
      * @param c
-     *            collection containing elements to be added to this list
+     *          collection containing elements to be added to this list
      * @return <tt>true</tt> if this list changed as a result of the call
      * @throws NullPointerException
-     *             if the specified collection is null
+     *                              if the specified collection is null
      */
-    public boolean addAll(list.LinkedList<E> c)
-    {
+    public boolean addAll(com.list.LinkedList<E> c) {
         return addAll(size, c);
     }
 
@@ -322,18 +302,17 @@ public class LinkedList<E>
      * that they are returned by the specified collection's iterator.
      *
      * @param index
-     *            index at which to insert the first element from the specified
-     *            collection
+     *              index at which to insert the first element from the specified
+     *              collection
      * @param c
-     *            collection containing elements to be added to this list
+     *              collection containing elements to be added to this list
      * @return <tt>true</tt> if this list changed as a result of the call
      * @throws IndexOutOfBoundsException
-     *             {@inheritDoc}
+     *                                   {@inheritDoc}
      * @throws NullPointerException
-     *             if the specified collection is null
+     *                                   if the specified collection is null
      */
-    public boolean addAll(int index, list.LinkedList<E> c)
-    {
+    public boolean addAll(int index, com.list.LinkedList<E> c) {
         if (index < 0 || index > size)
             throw new IndexOutOfBoundsException(
                     "Index: " + index + ", Size: " + size);
@@ -344,8 +323,7 @@ public class LinkedList<E>
 
         Entry<E> successor = (index == size ? header : entry(index));
         Entry<E> predecessor = successor.previous;
-        for (int i = 0; i < numNew; i++)
-        {
+        for (int i = 0; i < numNew; i++) {
             Entry<E> e = new Entry<E>((E) a[i], successor, predecessor);
             predecessor.next = e;
             predecessor = e;
@@ -359,11 +337,9 @@ public class LinkedList<E>
     /**
      * Removes all of the elements from this list.
      */
-    public void clear()
-    {
+    public void clear() {
         Entry<E> e = header.next;
-        while (e != header)
-        {
+        while (e != header) {
             Entry<E> next = e.next;
             e.next = e.previous = null;
             e.element = null;
@@ -379,13 +355,12 @@ public class LinkedList<E>
      * Returns the element at the specified position in this list.
      *
      * @param index
-     *            index of the element to return
+     *              index of the element to return
      * @return the element at the specified position in this list
      * @throws IndexOutOfBoundsException
-     *             {@inheritDoc}
+     *                                   {@inheritDoc}
      */
-    public E get(int index)
-    {
+    public E get(int index) {
         return entry(index).element;
     }
 
@@ -394,15 +369,14 @@ public class LinkedList<E>
      * specified element.
      *
      * @param index
-     *            index of the element to replace
+     *                index of the element to replace
      * @param element
-     *            element to be stored at the specified position
+     *                element to be stored at the specified position
      * @return the element previously at the specified position
      * @throws IndexOutOfBoundsException
-     *             {@inheritDoc}
+     *                                   {@inheritDoc}
      */
-    public E set(int index, E element)
-    {
+    public E set(int index, E element) {
         Entry<E> e = entry(index);
         E oldVal = e.element;
         e.element = element;
@@ -415,14 +389,13 @@ public class LinkedList<E>
      * elements to the right (adds one to their indices).
      *
      * @param index
-     *            index at which the specified element is to be inserted
+     *                index at which the specified element is to be inserted
      * @param element
-     *            element to be inserted
+     *                element to be inserted
      * @throws IndexOutOfBoundsException
-     *             {@inheritDoc}
+     *                                   {@inheritDoc}
      */
-    public void add(int index, E element)
-    {
+    public void add(int index, E element) {
         addBefore(element, (index == size ? header : entry(index)));
     }
 
@@ -432,32 +405,27 @@ public class LinkedList<E>
      * Returns the element that was removed from the list.
      *
      * @param index
-     *            the index of the element to be removed
+     *              the index of the element to be removed
      * @return the element previously at the specified position
      * @throws IndexOutOfBoundsException
-     *             {@inheritDoc}
+     *                                   {@inheritDoc}
      */
-    public E remove(int index)
-    {
+    public E remove(int index) {
         return remove(entry(index));
     }
 
     /**
      * Returns the indexed entry.
      */
-    private Entry<E> entry(int index)
-    {
+    private Entry<E> entry(int index) {
         if (index < 0 || index >= size)
             throw new IndexOutOfBoundsException(
                     "Index: " + index + ", Size: " + size);
         Entry<E> e = header;
-        if (index < (size >> 1))
-        {
+        if (index < (size >> 1)) {
             for (int i = 0; i <= index; i++)
                 e = e.next;
-        }
-        else
-        {
+        } else {
             for (int i = size; i > index; i--)
                 e = e.previous;
         }
@@ -474,26 +442,20 @@ public class LinkedList<E>
      * or -1 if there is no such index.
      *
      * @param o
-     *            element to search for
+     *          element to search for
      * @return the index of the first occurrence of the specified element in
      *         this list, or -1 if this list does not contain the element
      */
-    public int indexOf(Object o)
-    {
+    public int indexOf(Object o) {
         int index = 0;
-        if (o == null)
-        {
-            for (Entry<E> e = header.next; e != header; e = e.next)
-            {
+        if (o == null) {
+            for (Entry<E> e = header.next; e != header; e = e.next) {
                 if (e.element == null)
                     return index;
                 index++;
             }
-        }
-        else
-        {
-            for (Entry<E> e = header.next; e != header; e = e.next)
-            {
+        } else {
+            for (Entry<E> e = header.next; e != header; e = e.next) {
                 if (o.equals(e.element))
                     return index;
                 index++;
@@ -510,26 +472,20 @@ public class LinkedList<E>
      * or -1 if there is no such index.
      *
      * @param o
-     *            element to search for
+     *          element to search for
      * @return the index of the last occurrence of the specified element in this
      *         list, or -1 if this list does not contain the element
      */
-    public int lastIndexOf(Object o)
-    {
+    public int lastIndexOf(Object o) {
         int index = size;
-        if (o == null)
-        {
-            for (Entry<E> e = header.previous; e != header; e = e.previous)
-            {
+        if (o == null) {
+            for (Entry<E> e = header.previous; e != header; e = e.previous) {
                 index--;
                 if (e.element == null)
                     return index;
             }
-        }
-        else
-        {
-            for (Entry<E> e = header.previous; e != header; e = e.previous)
-            {
+        } else {
+            for (Entry<E> e = header.previous; e != header; e = e.previous) {
                 index--;
                 if (o.equals(e.element))
                     return index;
@@ -546,8 +502,7 @@ public class LinkedList<E>
      * @return the head of this list, or <tt>null</tt> if this list is empty
      * @since 1.5
      */
-    public E peek()
-    {
+    public E peek() {
         if (size == 0)
             return null;
         return getFirst();
@@ -558,11 +513,10 @@ public class LinkedList<E>
      *
      * @return the head of this list
      * @throws NoSuchElementException
-     *             if this list is empty
+     *                                if this list is empty
      * @since 1.5
      */
-    public E element()
-    {
+    public E element() {
         return getFirst();
     }
 
@@ -572,8 +526,7 @@ public class LinkedList<E>
      * @return the head of this list, or <tt>null</tt> if this list is empty
      * @since 1.5
      */
-    public E poll()
-    {
+    public E poll() {
         if (size == 0)
             return null;
         return removeFirst();
@@ -584,11 +537,10 @@ public class LinkedList<E>
      *
      * @return the head of this list
      * @throws NoSuchElementException
-     *             if this list is empty
+     *                                if this list is empty
      * @since 1.5
      */
-    public E remove()
-    {
+    public E remove() {
         return removeFirst();
     }
 
@@ -596,12 +548,11 @@ public class LinkedList<E>
      * Adds the specified element as the tail (last element) of this list.
      *
      * @param e
-     *            the element to add
+     *          the element to add
      * @return <tt>true</tt> (as specified by {@link Queue#offer})
      * @since 1.5
      */
-    public boolean offer(E e)
-    {
+    public boolean offer(E e) {
         return add(e);
     }
 
@@ -610,12 +561,11 @@ public class LinkedList<E>
      * Inserts the specified element at the front of this list.
      *
      * @param e
-     *            the element to insert
+     *          the element to insert
      * @return <tt>true</tt> (as specified by {@link Deque#offerFirst})
      * @since 1.6
      */
-    public boolean offerFirst(E e)
-    {
+    public boolean offerFirst(E e) {
         addFirst(e);
         return true;
     }
@@ -624,12 +574,11 @@ public class LinkedList<E>
      * Inserts the specified element at the end of this list.
      *
      * @param e
-     *            the element to insert
+     *          the element to insert
      * @return <tt>true</tt> (as specified by {@link Deque#offerLast})
      * @since 1.6
      */
-    public boolean offerLast(E e)
-    {
+    public boolean offerLast(E e) {
         addLast(e);
         return true;
     }
@@ -642,8 +591,7 @@ public class LinkedList<E>
      *         empty
      * @since 1.6
      */
-    public E peekFirst()
-    {
+    public E peekFirst() {
         if (size == 0)
             return null;
         return getFirst();
@@ -657,8 +605,7 @@ public class LinkedList<E>
      *         empty
      * @since 1.6
      */
-    public E peekLast()
-    {
+    public E peekLast() {
         if (size == 0)
             return null;
         return getLast();
@@ -672,8 +619,7 @@ public class LinkedList<E>
      *         empty
      * @since 1.6
      */
-    public E pollFirst()
-    {
+    public E pollFirst() {
         if (size == 0)
             return null;
         return removeFirst();
@@ -687,8 +633,7 @@ public class LinkedList<E>
      *         empty
      * @since 1.6
      */
-    public E pollLast()
-    {
+    public E pollLast() {
         if (size == 0)
             return null;
         return removeLast();
@@ -702,11 +647,10 @@ public class LinkedList<E>
      * This method is equivalent to {@link #addFirst}.
      *
      * @param e
-     *            the element to push
+     *          the element to push
      * @since 1.6
      */
-    public void push(E e)
-    {
+    public void push(E e) {
         addFirst(e);
     }
 
@@ -720,11 +664,10 @@ public class LinkedList<E>
      * @return the element at the front of this list (which is the top of the
      *         stack represented by this list)
      * @throws NoSuchElementException
-     *             if this list is empty
+     *                                if this list is empty
      * @since 1.6
      */
-    public E pop()
-    {
+    public E pop() {
         return removeFirst();
     }
 
@@ -734,12 +677,11 @@ public class LinkedList<E>
      * element, it is unchanged.
      *
      * @param o
-     *            element to be removed from this list, if present
+     *          element to be removed from this list, if present
      * @return <tt>true</tt> if the list contained the specified element
      * @since 1.6
      */
-    public boolean removeFirstOccurrence(Object o)
-    {
+    public boolean removeFirstOccurrence(Object o) {
         return remove(o);
     }
 
@@ -749,29 +691,21 @@ public class LinkedList<E>
      * element, it is unchanged.
      *
      * @param o
-     *            element to be removed from this list, if present
+     *          element to be removed from this list, if present
      * @return <tt>true</tt> if the list contained the specified element
      * @since 1.6
      */
-    public boolean removeLastOccurrence(Object o)
-    {
-        if (o == null)
-        {
-            for (Entry<E> e = header.previous; e != header; e = e.previous)
-            {
-                if (e.element == null)
-                {
+    public boolean removeLastOccurrence(Object o) {
+        if (o == null) {
+            for (Entry<E> e = header.previous; e != header; e = e.previous) {
+                if (e.element == null) {
                     remove(e);
                     return true;
                 }
             }
-        }
-        else
-        {
-            for (Entry<E> e = header.previous; e != header; e = e.previous)
-            {
-                if (o.equals(e.element))
-                {
+        } else {
+            for (Entry<E> e = header.previous; e != header; e = e.previous) {
+                if (o.equals(e.element)) {
                     remove(e);
                     return true;
                 }
@@ -780,22 +714,19 @@ public class LinkedList<E>
         return false;
     }
 
-    private static class Entry<E>
-    {
-        E        element;
+    private static class Entry<E> {
+        E element;
         Entry<E> next;
         Entry<E> previous;
 
-        Entry(E element, Entry<E> next, Entry<E> previous)
-        {
+        Entry(E element, Entry<E> next, Entry<E> previous) {
             this.element = element;
             this.next = next;
             this.previous = previous;
         }
     }
 
-    private Entry<E> addBefore(E e, Entry<E> entry)
-    {
+    private Entry<E> addBefore(E e, Entry<E> entry) {
         Entry<E> newEntry = new Entry<E>(e, entry, entry.previous);
         newEntry.previous.next = newEntry;
         newEntry.next.previous = newEntry;
@@ -803,8 +734,7 @@ public class LinkedList<E>
         return newEntry;
     }
 
-    private E remove(Entry<E> e)
-    {
+    private E remove(Entry<E> e) {
         if (e == header)
             throw new NoSuchElementException();
 
@@ -821,11 +751,13 @@ public class LinkedList<E>
      * Returns an array containing all of the elements in this list
      * in proper sequence (from first to last element).
      *
-     * <p>The returned array will be "safe" in that no references to it are
-     * maintained by this list.  (In other words, this method must allocate
-     * a new array).  The caller is thus free to modify the returned array.
+     * <p>
+     * The returned array will be "safe" in that no references to it are
+     * maintained by this list. (In other words, this method must allocate
+     * a new array). The caller is thus free to modify the returned array.
      *
-     * <p>This method acts as bridge between array-based and collection-based
+     * <p>
+     * This method acts as bridge between array-based and collection-based
      * APIs.
      *
      * @return an array containing all of the elements in this list
@@ -842,28 +774,32 @@ public class LinkedList<E>
     /**
      * Returns an array containing all of the elements in this list in
      * proper sequence (from first to last element); the runtime type of
-     * the returned array is that of the specified array.  If the list fits
-     * in the specified array, it is returned therein.  Otherwise, a new
+     * the returned array is that of the specified array. If the list fits
+     * in the specified array, it is returned therein. Otherwise, a new
      * array is allocated with the runtime type of the specified array and
      * the size of this list.
      *
-     * <p>If the list fits in the specified array with room to spare (i.e.,
+     * <p>
+     * If the list fits in the specified array with room to spare (i.e.,
      * the array has more elements than the list), the element in the array
      * immediately following the end of the list is set to <tt>null</tt>.
      * (This is useful in determining the length of the list <i>only</i> if
      * the caller knows that the list does not contain any null elements.)
      *
-     * <p>Like the {@link #toArray()} method, this method acts as bridge between
-     * array-based and collection-based APIs.  Further, this method allows
+     * <p>
+     * Like the {@link #toArray()} method, this method acts as bridge between
+     * array-based and collection-based APIs. Further, this method allows
      * precise control over the runtime type of the output array, and may,
      * under certain circumstances, be used to save allocation costs.
      *
-     * <p>Suppose <tt>x</tt> is a list known to contain only strings.
+     * <p>
+     * Suppose <tt>x</tt> is a list known to contain only strings.
      * The following code can be used to dump the list into a newly
      * allocated array of <tt>String</tt>:
      *
      * <pre>
-     *     String[] y = x.toArray(new String[0]);</pre>
+     * String[] y = x.toArray(new String[0]);
+     * </pre>
      *
      * Note that <tt>toArray(new Object[0])</tt> is identical in function to
      * <tt>toArray()</tt>.
@@ -872,14 +808,15 @@ public class LinkedList<E>
      *          be stored, if it is big enough; otherwise, a new array of the
      *          same runtime type is allocated for this purpose.
      * @return an array containing the elements of the list
-     * @throws ArrayStoreException if the runtime type of the specified array
-     *         is not a supertype of the runtime type of every element in
-     *         this list
+     * @throws ArrayStoreException  if the runtime type of the specified array
+     *                              is not a supertype of the runtime type of every
+     *                              element in
+     *                              this list
      * @throws NullPointerException if the specified array is null
      */
     public <T> T[] toArray(T[] a) {
         if (a.length < size)
-            a = (T[])java.lang.reflect.Array.newInstance(
+            a = (T[]) java.lang.reflect.Array.newInstance(
                     a.getClass().getComponentType(), size);
         int i = 0;
         Object[] result = a;
@@ -891,6 +828,5 @@ public class LinkedList<E>
 
         return a;
     }
-
 
 }
